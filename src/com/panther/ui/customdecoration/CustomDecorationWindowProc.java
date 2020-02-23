@@ -9,23 +9,24 @@ import com.sun.jna.win32.W32APIOptions;
 
 import static com.sun.jna.platform.win32.WinUser.*;
 
-public class CustomDecoratedWindowProc implements WinUser.WindowProc {
+public class CustomDecorationWindowProc implements WinUser.WindowProc {
    final int WM_NCCALCSIZE = 0x0083;
    final int WM_NCHITTEST = 0x0084;
-   final int GET_TITLE_BAR_HEIGHT = 27;
+   final int TITLE_BAR_HEIGHT = 27;
 
    final User32Ex INSTANCEEx;
    WinDef.HWND hwnd = new WinDef.HWND();
    BaseTSD.LONG_PTR defWndProc;
 
-   public CustomDecoratedWindowProc() {
+   public CustomDecorationWindowProc() {
       INSTANCEEx = (User32Ex) Native.load("user32", User32Ex.class, W32APIOptions.DEFAULT_OPTIONS);
    }
 
    public void init(WinDef.HWND hwnd) {
       this.hwnd = hwnd;
       defWndProc = INSTANCEEx.SetWindowLongPtr(hwnd, User32Ex.GWLP_WNDPROC, this);
-      INSTANCEEx.SetWindowPos(hwnd, hwnd, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+      INSTANCEEx.SetWindowPos(hwnd, hwnd, 0, 0, 0, 0,
+              SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
    }
 
    @Override
@@ -61,17 +62,19 @@ public class CustomDecoratedWindowProc implements WinUser.WindowProc {
       int uRow = 1, uCol = 1;
       boolean fOnResizeBorder = false, fOnFrameDrag = false, fOnIcon = false;
 
-      if (ptMouse.y >= rcWindow.top && ptMouse.y < rcWindow.top + GET_TITLE_BAR_HEIGHT + borderOffset) {
+      if (ptMouse.y >= rcWindow.top && ptMouse.y < rcWindow.top + TITLE_BAR_HEIGHT + borderOffset) {
          fOnResizeBorder = (ptMouse.y < (rcWindow.top + borderThickness));  // Top Resizing
          if (!fOnResizeBorder) {
-            fOnIcon = (ptMouse.y <= rcWindow.top + GET_TITLE_BAR_HEIGHT)
+            fOnIcon = (ptMouse.y <= rcWindow.top + TITLE_BAR_HEIGHT)
                     && (ptMouse.x > rcWindow.left)
                     && (ptMouse.x < (rcWindow.left + CustomDecorationParameters.getIconWidth() + borderOffset));
 
             if (!fOnIcon)
-               fOnFrameDrag = (ptMouse.y <= rcWindow.top + GET_TITLE_BAR_HEIGHT + borderOffset)
-                       && (ptMouse.x < (rcWindow.right - (CustomDecorationParameters.getControlBoxWidth() + borderOffset + CustomDecorationParameters.getExtraRightReservedArea())))
-                       && (ptMouse.x > (rcWindow.left + CustomDecorationParameters.getIconWidth() + borderOffset + CustomDecorationParameters.getExtraLeftReservedArea()));
+               fOnFrameDrag = (ptMouse.y <= rcWindow.top + TITLE_BAR_HEIGHT + borderOffset)
+                       && (ptMouse.x < (rcWindow.right - (CustomDecorationParameters.getControlBoxWidth()
+                           + borderOffset + CustomDecorationParameters.getExtraRightReservedArea())))
+                       && (ptMouse.x > (rcWindow.left + CustomDecorationParameters.getIconWidth()
+                           + borderOffset + CustomDecorationParameters.getExtraLeftReservedArea()));
          }
          uRow = 0; // Top Resizing or Caption Moving
       } else if (ptMouse.y < rcWindow.bottom && ptMouse.y >= rcWindow.bottom - borderThickness)
