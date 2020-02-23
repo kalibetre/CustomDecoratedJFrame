@@ -1,6 +1,6 @@
 package com.panther.ui;
 
-import com.panther.ui.customdecoration.CustomDecoratedWindowProc;
+import com.panther.ui.customdecoration.CustomDecorationWindowProc;
 import com.panther.ui.theme.Theme;
 import com.sun.jna.Native;
 import com.sun.jna.platform.win32.WinDef;
@@ -10,12 +10,12 @@ import java.awt.*;
 
 public class CustomJFrame extends JFrame {
    final Theme theme;
-   final CustomDecoratedWindowProc windowProcEx;
+   final CustomDecorationWindowProc windowProcEx;
 
    public CustomJFrame(Theme theme, String title) throws HeadlessException {
       super(title);
       this.theme = theme;
-      windowProcEx = new CustomDecoratedWindowProc();
+      windowProcEx = new CustomDecorationWindowProc();
    }
 
    @Override
