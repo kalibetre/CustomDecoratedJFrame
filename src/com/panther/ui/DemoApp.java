@@ -53,15 +53,21 @@ public class DemoApp {
                     public void componentResized(ComponentEvent e) {
                         super.componentResized(e);
                         // TODO: Set the Necessary Widths
-                        JFrame mainFrame = (JFrame) e.getSource();
+                        CustomJFrame mainFrame = (CustomJFrame) e.getSource();
                         if (mainFrame.getExtendedState() == JFrame.MAXIMIZED_BOTH) {
                             CustomDecorationParameters.setMaximizedWindowFrameThickness(12);
                             mainFrame.getRootPane().setBorder(BorderFactory.createLineBorder(mainFrame.getBackground(),
                                     CustomDecorationParameters.getMaximizedWindowFrameThickness()));
+                            if(mainFrame.getRestoreButton() != null){
+                                mainFrame.getRestoreButton().setControlBoxButtonType(ButtonType.RESTORE);
+                            }
                         } else {
                             CustomDecorationParameters.setMaximizedWindowFrameThickness(0);
                             mainFrame.getRootPane().setBorder(BorderFactory.createLineBorder(darkTheme.getFrameBorderColor(),
                                     CustomDecorationParameters.getFrameBorderThickness()));
+                            if(mainFrame.getRestoreButton() != null && mainFrame.getRestoreButton().controlBoxButtonType != ButtonType.MAXIMIZE){
+                                mainFrame.getRestoreButton().setControlBoxButtonType(ButtonType.MAXIMIZE);
+                            }
                         }
                     }
                 });
@@ -113,6 +119,8 @@ public class DemoApp {
         controlBox.add(minimizeBtn);
         controlBox.add(maximizeBtn);
         controlBox.add(closeBtn);
+
+        frame.setRestoreButton(maximizeBtn);
     }
 
 }

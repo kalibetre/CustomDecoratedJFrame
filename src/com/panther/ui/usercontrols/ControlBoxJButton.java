@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class ControlBoxJButton extends JButton implements MouseListener {
-   public final ButtonType controlBoxButtonType;
+   public ButtonType controlBoxButtonType;
    private final Theme theme;
 
    public ControlBoxJButton(ButtonType controlBoxButtonType, Theme theme) {
@@ -16,6 +16,10 @@ public class ControlBoxJButton extends JButton implements MouseListener {
       addMouseListener(this);
       this.controlBoxButtonType = controlBoxButtonType;
       this.theme = theme;
+   }
+
+   public void setControlBoxButtonType(ButtonType controlBoxButtonType) {
+      this.controlBoxButtonType = controlBoxButtonType;
    }
 
    @Override
@@ -36,22 +40,31 @@ public class ControlBoxJButton extends JButton implements MouseListener {
       g2d.setStroke(new BasicStroke(1.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
       g2d.setColor(theme.getLightForegroundColor());
 
-      Point markStPt = new Point(width / 2 - 5, (height / 2 - 5));
-      Point markEnPt = new Point(width / 2 + 5, (height / 2 + 5));
+      Point markStPt = new Point(width / 2 - 5, height / 2 - 5);
+      Point markEnPt = new Point(width / 2 + 5, height / 2 + 5);
 
       switch (controlBoxButtonType){
          case MINIMIZE:
-            markStPt = new Point((width / 2 - 5),(height / 2));
-            markEnPt = new Point((width / 2 + 5),(height / 2));
+            markStPt = new Point(width / 2 - 5,height / 2);
+            markEnPt = new Point(width / 2 + 5,height / 2);
             g2d.drawLine(markStPt.x, markStPt.y, markEnPt.x, markEnPt.y);
             break;
          case MAXIMIZE:
             g2d.drawRect(markStPt.x, markStPt.y, 10, 10);
             break;
+         case RESTORE:
+            markStPt = new Point(width / 2 - 5, height / 2 - 3);
+            g2d.drawRect(markStPt.x, markStPt.y, 8, 8);
+            markStPt = new Point(width / 2 + 5, height / 2 - 5);
+            g2d.drawLine(markStPt.x, markStPt.y, markStPt.x - 8, markStPt.y);
+            g2d.drawLine(markStPt.x, markStPt.y, markStPt.x, markStPt.y + 8);
+            g2d.drawLine(markStPt.x - 8, markStPt.y, markStPt.x - 8, markStPt.y + 2);
+            g2d.drawLine(markStPt.x, markStPt.y + 8, markStPt.x - 2, markStPt.y + 8);
+            break;
          case CLOSE:
             g2d.drawLine(markStPt.x, markStPt.y, markEnPt.x, markEnPt.y);
-            markStPt = new Point((width / 2 + 5),(height / 2 - 5));
-            markEnPt = new Point((width / 2 - 5),(height / 2 + 5));
+            markStPt = new Point(width / 2 + 5,height / 2 - 5);
+            markEnPt = new Point(width / 2 - 5,height / 2 + 5);
             g2d.drawLine(markStPt.x, markStPt.y, markEnPt.x, markEnPt.y);
             break;
       }
