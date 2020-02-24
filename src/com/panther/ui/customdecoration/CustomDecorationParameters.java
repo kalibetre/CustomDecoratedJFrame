@@ -7,8 +7,8 @@ public class CustomDecorationParameters {
    private static AtomicInteger titleBarHeight = new AtomicInteger(27);
    private static AtomicInteger controlBoxWidth = new AtomicInteger(150);
    private static AtomicInteger iconWidth = new AtomicInteger(27);
-   private static AtomicInteger extraLeftReservedArea = new AtomicInteger(0);
-   private static AtomicInteger extraRightReservedArea = new AtomicInteger(0);
+   private static AtomicInteger extraLeftReservedWidth = new AtomicInteger(0);
+   private static AtomicInteger extraRightReservedWidth = new AtomicInteger(0);
    private static AtomicInteger maximizedWindowFrameThickness = new AtomicInteger(10);
    private static AtomicInteger frameResizeBorderThickness = new AtomicInteger(4);
    private static AtomicInteger frameBorderThickness = new AtomicInteger(1);
@@ -29,20 +29,20 @@ public class CustomDecorationParameters {
       iconWidth.set(value);
    }
 
-   public static int getExtraLeftReservedArea() {
-      return extraLeftReservedArea.get();
+   public static int getExtraLeftReservedWidth() {
+      return extraLeftReservedWidth.get();
    }
 
-   public static void setExtraLeftReservedArea(int value) {
-      extraLeftReservedArea.set(value);
+   public static void setExtraLeftReservedWidth(int value) {
+      extraLeftReservedWidth.set(value);
    }
 
-   public static int getExtraRightReservedArea() {
-      return extraRightReservedArea.get();
+   public static int getExtraRightReservedWidth() {
+      return extraRightReservedWidth.get();
    }
 
-   public static void setExtraRightReservedArea(int value) {
-      extraRightReservedArea.set(value);
+   public static void setExtraRightReservedWidth(int value) {
+      extraRightReservedWidth.set(value);
    }
 
    public static int getMaximizedWindowFrameThickness() {

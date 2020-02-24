@@ -73,9 +73,9 @@ public class CustomDecorationWindowProc implements WinUser.WindowProc {
             if (!fOnIcon)
                fOnFrameDrag = (ptMouse.y <= rcWindow.top + TITLE_BAR_HEIGHT + borderOffset)
                        && (ptMouse.x < (rcWindow.right - (CustomDecorationParameters.getControlBoxWidth()
-                           + borderOffset + CustomDecorationParameters.getExtraRightReservedArea())))
+                           + borderOffset + CustomDecorationParameters.getExtraRightReservedWidth())))
                        && (ptMouse.x > (rcWindow.left + CustomDecorationParameters.getIconWidth()
-                           + borderOffset + CustomDecorationParameters.getExtraLeftReservedArea()));
+                           + borderOffset + CustomDecorationParameters.getExtraLeftReservedWidth()));
          }
          uRow = 0; // Top Resizing or Caption Moving
       } else if (ptMouse.y < rcWindow.bottom && ptMouse.y >= rcWindow.bottom - borderThickness)
