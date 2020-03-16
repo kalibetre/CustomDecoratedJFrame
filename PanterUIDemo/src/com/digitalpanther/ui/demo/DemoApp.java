@@ -8,6 +8,10 @@ import com.digitalpanther.ui.theme.DarkTheme;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class DemoApp {
    public static void main(String[] args) {
@@ -49,6 +53,17 @@ public class DemoApp {
 
             ImageIcon imageIcon = new ImageIcon("resources/appicon.png");
             frame.setIcon(imageIcon.getImage());
+
+            frame.addJFrameCloseEventAdapter(new MouseAdapter() {
+               @Override
+               public void mouseClicked(MouseEvent e) {
+                  int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit the app ?");
+                  if (response == JOptionPane.OK_OPTION) {
+                         System.exit(0);
+                  }
+               }
+            });
+
 
          }
       });

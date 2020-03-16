@@ -12,21 +12,19 @@ import com.sun.jna.platform.win32.WinDef;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 public class CustomJFrame extends JFrame {
    final Theme theme;
    final CustomDecorationWindowProc windowProcEx;
-   private ControlBoxJButton restoreButton = null;
    private WindowFrameType windowFrameType = WindowFrameType.NORMAL;
    private JPanel titleBar;
    private JPanel titleBarCustomContent;
    private JPanel controlBox;
    private JPanel frameContentPane;
    private JPanel iconContainer;
+   private ControlBoxJButton closeBtn, minimizeBtn, restoreButton;
+   private MouseAdapter closeBtnMouseAdapter, restoreBtnMouseAdapter, minimizeBtnMouseAdapter;
 
    public CustomJFrame(Theme theme, String title) throws HeadlessException {
       super(title);
@@ -51,10 +49,6 @@ public class CustomJFrame extends JFrame {
       WinDef.HWND hwnd = new WinDef.HWND();
       hwnd.setPointer(Native.getComponentPointer(this));
       return hwnd;
-   }
-
-   public void setRestoreButton(ControlBoxJButton restoreButton) {
-      this.restoreButton = restoreButton;
    }
 
    public ControlBoxJButton getRestoreButton() {
@@ -135,7 +129,7 @@ public class CustomJFrame extends JFrame {
       if(windowFrameType == WindowFrameType.NORMAL){
          controlBox.setLayout(new GridLayout(1, 3, -1, 0));
          addMinimizeButton();
-         addMaximizeButton();
+         addRestoreButton();
          addCloseButton();
       } else if(windowFrameType == WindowFrameType.TOOL){
          controlBox.setLayout(new GridLayout(1, 1, -1, 0));
@@ -144,26 +138,24 @@ public class CustomJFrame extends JFrame {
    }
 
    private void addCloseButton(){
-      ControlBoxJButton closeBtn = new ControlBoxJButton(ButtonType.CLOSE,theme);
+      closeBtn = new ControlBoxJButton(ButtonType.CLOSE,theme);
       closeBtn.setPreferredSize(new Dimension(50, CustomDecorationParameters.getTitleBarHeight()));
       closeBtn.setBackground(theme.getDefaultBackgroundColor());
-      closeBtn.addMouseListener(new MouseAdapter() {
+      closeBtnMouseAdapter = new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
-            int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit the app ?");
-            if (response == JOptionPane.OK_OPTION) {
-               System.exit(0);
-            }
+            System.exit(0);
          }
-      });
+      };
+      closeBtn.addMouseListener(closeBtnMouseAdapter);
       controlBox.add(closeBtn);
    }
 
-   private void addMaximizeButton(){
-      ControlBoxJButton maximizeBtn = new ControlBoxJButton(ButtonType.MAXIMIZE, theme);
-      maximizeBtn.setPreferredSize(new Dimension(50, CustomDecorationParameters.getTitleBarHeight()));
-      maximizeBtn.setBackground(theme.getDefaultBackgroundColor());
-      maximizeBtn.addMouseListener(new MouseAdapter() {
+   private void addRestoreButton(){
+      restoreButton = new ControlBoxJButton(ButtonType.MAXIMIZE, theme);
+      restoreButton.setPreferredSize(new Dimension(50, CustomDecorationParameters.getTitleBarHeight()));
+      restoreButton.setBackground(theme.getDefaultBackgroundColor());
+      restoreBtnMouseAdapter = new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
             if (getExtendedState() == JFrame.MAXIMIZED_BOTH)
@@ -171,21 +163,22 @@ public class CustomJFrame extends JFrame {
             else
                setExtendedState(JFrame.MAXIMIZED_BOTH);
          }
-      });
-      controlBox.add(maximizeBtn);
-      setRestoreButton(maximizeBtn);
+      };
+      restoreButton.addMouseListener(restoreBtnMouseAdapter);
+      controlBox.add(restoreButton);
    }
 
    private void addMinimizeButton(){
-      ControlBoxJButton minimizeBtn = new ControlBoxJButton(ButtonType.MINIMIZE, theme);
+      minimizeBtn = new ControlBoxJButton(ButtonType.MINIMIZE, theme);
       minimizeBtn.setPreferredSize(new Dimension(50, CustomDecorationParameters.getTitleBarHeight()));
       minimizeBtn.setBackground(theme.getDefaultBackgroundColor());
-      minimizeBtn.addMouseListener(new MouseAdapter() {
+      minimizeBtnMouseAdapter = new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
             setExtendedState(JFrame.ICONIFIED);
          }
-      });
+      };
+      minimizeBtn.addMouseListener(minimizeBtnMouseAdapter);
       controlBox.add(minimizeBtn);
    }
 
@@ -211,4 +204,26 @@ public class CustomJFrame extends JFrame {
       pack();
       CustomDecorationParameters.setExtraLeftReservedWidth(titleBarCustomContent.getWidth() + 10);
    }
+
+   public void addJFrameCloseEventAdapter(MouseAdapter mouseAdapter){
+      if(closeBtn != null){
+         closeBtn.removeMouseListener(closeBtnMouseAdapter);
+         closeBtn.addMouseListener(mouseAdapter);
+      }
+   }
+
+   public void addJFrameRestoreEventAdapter(MouseAdapter mouseAdapter){
+      if(restoreButton != null){
+         restoreButton.removeMouseListener(closeBtnMouseAdapter);
+         restoreButton.addMouseListener(mouseAdapter);
+      }
+   }
+
+   public void addJFrameMinimizeEventAdapter(MouseAdapter mouseAdapter){
+      if(restoreButton != null){
+         closeBtn.removeMouseListener(closeBtnMouseAdapter);
+         closeBtn.addMouseListener(mouseAdapter);
+      }
+   }
+
 }
