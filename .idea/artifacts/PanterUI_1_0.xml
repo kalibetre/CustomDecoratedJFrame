@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PanterUI-1.0">
+    <output-path>$PROJECT_DIR$/out/artifacts/PanterUI_1_0</output-path>
+    <root id="archive" name="PanterUI-1.0.jar">
+      <element id="module-output" name="PanterUI" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../RESOURCES/Java/jna-platform-5.5.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../RESOURCES/Java/jna-5.5.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

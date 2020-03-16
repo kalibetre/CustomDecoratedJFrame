@@ -1,9 +1,9 @@
 // Copyright 2020 Kalkidan Betre Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
-package com.panther.ui;
+package com.digitalpanther.ui;
 
-import com.panther.ui.customdecoration.CustomDecorationWindowProc;
-import com.panther.ui.theme.Theme;
-import com.panther.ui.usercontrols.ControlBoxJButton;
+import com.digitalpanther.ui.theme.Theme;
+import com.digitalpanther.ui.usercontrols.ControlBoxJButton;
+import com.digitalpanther.ui.customdecoration.CustomDecorationWindowProc;
 import com.sun.jna.Native;
 import com.sun.jna.platform.win32.WinDef;
 

@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CustomDecoratedJFrame.iml" filepath="$PROJECT_DIR$/CustomDecoratedJFrame.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PanterUI/PanterUI.iml" filepath="$PROJECT_DIR$/PanterUI/PanterUI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PanterUIDemo/PanterUIDemo.iml" filepath="$PROJECT_DIR$/PanterUIDemo/PanterUIDemo.iml" />
     </modules>
   </component>
 </project>
