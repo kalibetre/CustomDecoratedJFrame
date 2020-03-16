@@ -13,7 +13,6 @@ import static com.sun.jna.platform.win32.WinUser.*;
 public class CustomDecorationWindowProc implements WinUser.WindowProc {
    final int WM_NCCALCSIZE = 0x0083;
    final int WM_NCHITTEST = 0x0084;
-   final int TITLE_BAR_HEIGHT = 27;
 
    final User32Ex INSTANCEEx;
    WinDef.HWND hwnd = new WinDef.HWND();
@@ -61,17 +60,13 @@ public class CustomDecorationWindowProc implements WinUser.WindowProc {
       User32.INSTANCE.GetWindowRect(hWnd, rcWindow);
 
       int uRow = 1, uCol = 1;
-      boolean fOnResizeBorder = false, fOnFrameDrag = false, fOnIcon = false;
+      boolean fOnResizeBorder = false, fOnFrameDrag = false;
 
-      if (ptMouse.y >= rcWindow.top && ptMouse.y < rcWindow.top + TITLE_BAR_HEIGHT + borderOffset) {
+      int topOffset = CustomDecorationParameters.getTitleBarHeight() == 0 ? borderThickness : CustomDecorationParameters.getTitleBarHeight();
+      if (ptMouse.y >= rcWindow.top && ptMouse.y < rcWindow.top + topOffset + borderOffset) {
          fOnResizeBorder = (ptMouse.y < (rcWindow.top + borderThickness));  // Top Resizing
          if (!fOnResizeBorder) {
-            fOnIcon = (ptMouse.y <= rcWindow.top + TITLE_BAR_HEIGHT)
-                    && (ptMouse.x > rcWindow.left)
-                    && (ptMouse.x < (rcWindow.left + CustomDecorationParameters.getIconWidth() + borderOffset));
-
-            if (!fOnIcon)
-               fOnFrameDrag = (ptMouse.y <= rcWindow.top + TITLE_BAR_HEIGHT + borderOffset)
+               fOnFrameDrag = (ptMouse.y <= rcWindow.top + CustomDecorationParameters.getTitleBarHeight() + borderOffset)
                        && (ptMouse.x < (rcWindow.right - (CustomDecorationParameters.getControlBoxWidth()
                            + borderOffset + CustomDecorationParameters.getExtraRightReservedWidth())))
                        && (ptMouse.x > (rcWindow.left + CustomDecorationParameters.getIconWidth()
@@ -89,7 +84,7 @@ public class CustomDecorationWindowProc implements WinUser.WindowProc {
               HTRIGHT = 11, HTBOTTOMLEFT = 16, HTBOTTOM = 15, HTBOTTOMRIGHT = 17, HTSYSMENU = 3;
 
       int[][] hitTests = {
-              {HTTOPLEFT, fOnResizeBorder ? HTTOP : fOnIcon ? HTSYSMENU : fOnFrameDrag ? HTCAPTION : HTNOWHERE, HTTOPRIGHT},
+              {HTTOPLEFT, fOnResizeBorder ? HTTOP : fOnFrameDrag ? HTCAPTION : HTNOWHERE, HTTOPRIGHT},
               {HTLEFT, HTNOWHERE, HTRIGHT},
               {HTBOTTOMLEFT, HTBOTTOM, HTBOTTOMRIGHT},
       };
