@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CustomDecorationParameters {
    private static AtomicInteger titleBarHeight = new AtomicInteger(27);
    private static AtomicInteger controlBoxWidth = new AtomicInteger(150);
-   private static AtomicInteger iconWidth = new AtomicInteger(27);
+   private static AtomicInteger iconWidth = new AtomicInteger(40);
    private static AtomicInteger extraLeftReservedWidth = new AtomicInteger(0);
    private static AtomicInteger extraRightReservedWidth = new AtomicInteger(0);
    private static AtomicInteger maximizedWindowFrameThickness = new AtomicInteger(10);
