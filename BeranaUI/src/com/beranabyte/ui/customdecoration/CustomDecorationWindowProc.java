@@ -1,5 +1,5 @@
 // Copyright 2020 Kalkidan Betre Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
-package com.digitalpanther.ui.customdecoration;
+package com.beranabyte.ui.customdecoration;
 
 import com.sun.jna.Native;
 import com.sun.jna.platform.win32.BaseTSD;

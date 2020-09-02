@@ -1,12 +1,12 @@
 // Copyright 2020 Kalkidan Betre Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
-package com.digitalpanther.ui.customjframe;
+package com.beranabyte.ui.customjframe;
 
-import com.digitalpanther.ui.customdecoration.CustomDecorationParameters;
-import com.digitalpanther.ui.theme.Theme;
-import com.digitalpanther.ui.usercontrols.ButtonType;
-import com.digitalpanther.ui.usercontrols.ControlBoxJButton;
-import com.digitalpanther.ui.customdecoration.CustomDecorationWindowProc;
-import com.digitalpanther.ui.usercontrols.IconJPanel;
+import com.beranabyte.ui.customdecoration.CustomDecorationParameters;
+import com.beranabyte.ui.theme.Theme;
+import com.beranabyte.ui.usercontrols.ButtonType;
+import com.beranabyte.ui.usercontrols.ControlBoxJButton;
+import com.beranabyte.ui.customdecoration.CustomDecorationWindowProc;
+import com.beranabyte.ui.usercontrols.IconJPanel;
 import com.sun.jna.Native;
 import com.sun.jna.platform.win32.WinDef;
 

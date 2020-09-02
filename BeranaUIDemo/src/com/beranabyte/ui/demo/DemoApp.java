@@ -1,15 +1,13 @@
 // Copyright 2020 Kalkidan Betre Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
-package com.digitalpanther.ui.demo;
+package com.beranabyte.ui.demo;
 
-import com.digitalpanther.ui.customjframe.CustomJFrame;
-import com.digitalpanther.ui.customjframe.WindowFrameType;
-import com.digitalpanther.ui.theme.Theme;
-import com.digitalpanther.ui.theme.DarkTheme;
+import com.beranabyte.ui.customjframe.CustomJFrame;
+import com.beranabyte.ui.customjframe.WindowFrameType;
+import com.beranabyte.ui.theme.DarkTheme;
+import com.beranabyte.ui.theme.Theme;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
