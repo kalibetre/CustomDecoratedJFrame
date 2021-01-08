@@ -24,7 +24,10 @@ public class CustomDecorationWindowProc implements WinUser.WindowProc {
 
    public void init(WinDef.HWND hwnd) {
       this.hwnd = hwnd;
-      defWndProc = INSTANCEEx.SetWindowLongPtr(hwnd, User32Ex.GWLP_WNDPROC, this);
+      if(is64Bit())
+         defWndProc=INSTANCEEx.SetWindowLongPtr(hwnd, User32Ex.GWLP_WNDPROC, this);
+      else
+         defWndProc=INSTANCEEx.SetWindowLong(hwnd, User32Ex.GWLP_WNDPROC, this);
       INSTANCEEx.SetWindowPos(hwnd, hwnd, 0, 0, 0, 0,
               SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
    }
@@ -42,7 +45,10 @@ public class CustomDecorationWindowProc implements WinUser.WindowProc {
             }
             return lresult;
          case WM_DESTROY:
-            INSTANCEEx.SetWindowLongPtr(hwnd, User32Ex.GWLP_WNDPROC, defWndProc);
+            if(is64Bit())
+               INSTANCEEx.SetWindowLongPtr(hwnd, User32Ex.GWLP_WNDPROC, defWndProc);
+            else
+               INSTANCEEx.SetWindowLong(hwnd, User32Ex.GWLP_WNDPROC, defWndProc);
             return new LRESULT(0);
          default:
             lresult = INSTANCEEx.CallWindowProc(defWndProc, hwnd, uMsg, wparam, lparam);
@@ -90,5 +96,16 @@ public class CustomDecorationWindowProc implements WinUser.WindowProc {
       };
 
       return new LRESULT(hitTests[uRow][uCol]);
+   }
+
+   public static final boolean is64Bit()
+   {
+      String model=System.getProperty("sun.arch.data.model",
+              System.getProperty("com.ibm.vm.bitmode"));
+      if(model != null)
+      {
+         return "64".equals(model);
+      }
+      return false;
    }
 }
